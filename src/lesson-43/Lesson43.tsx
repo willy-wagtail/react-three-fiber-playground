@@ -10,12 +10,27 @@ import {
 } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { useControls } from "leva";
+import { Perf } from "r3f-perf";
 
 import CustomObject from "./CustomObject";
 
 export default function Lesson43() {
   const cubeRef = useRef<THREE.Mesh>(null!);
   const sphereRef = useRef<THREE.Mesh>(null!);
+
+  const { position, colour } = useControls("sphere", {
+    position: {
+      value: { x: -2, y: 0 },
+      step: 0.01,
+      joystick: "invertY",
+    },
+    colour: "#ff0000",
+  });
+
+  const { perfVisible } = useControls({
+    perfVisible: false,
+  });
 
   /**
    * For consistency between monitors with different FPS,
@@ -33,6 +48,8 @@ export default function Lesson43() {
 
   return (
     <>
+      {perfVisible ? <Perf position="top-left" /> : null}
+
       <OrbitControls makeDefault />
 
       <directionalLight position={[1, 2, 3]} intensity={1.2} />
@@ -47,9 +64,9 @@ export default function Lesson43() {
           scale={100}
           fixed={true} // perspective or not?
         >
-          <mesh ref={sphereRef} position-x={-2}>
+          <mesh ref={sphereRef} position={[position.x, position.y, 0]}>
             <sphereGeometry />
-            <meshStandardMaterial color="orange" />
+            <meshStandardMaterial color={colour} />
 
             <Html
               position={[1, 1, 1]}
