@@ -28,10 +28,6 @@ export default function Lesson43() {
     colour: "#ff0000",
   });
 
-  const { perfVisible } = useControls({
-    perfVisible: false,
-  });
-
   /**
    * For consistency between monitors with different FPS,
    * use delta or elapsedTime rather than a constant for animations.
@@ -48,8 +44,6 @@ export default function Lesson43() {
 
   return (
     <>
-      {perfVisible ? <Perf position="top-left" /> : null}
-
       <OrbitControls makeDefault />
 
       <directionalLight position={[1, 2, 3]} intensity={1.2} />
