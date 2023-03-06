@@ -7,6 +7,8 @@ import {
   RandomizedLight,
   ContactShadows,
   Sky,
+  Environment,
+  Lightformer,
 } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
@@ -29,7 +31,7 @@ export default function Lesson45() {
   });
 
   const { colour, opacity, blur } = useControls("contact shadows", {
-    colour: "#1d8f75",
+    colour: "#4b2709", // 1d8f75
     opacity: { value: 0.4, min: 0, max: 1 },
     blur: { value: 2.8, min: 0, max: 10 },
   });
@@ -39,6 +41,14 @@ export default function Lesson45() {
   const { sunPosition } = useControls("sky", {
     sunPosition: { value: [1, 2, 3] },
   });
+
+  const { envMapIntensity, envMapHeight, envMapRadius, envMapScale } =
+    useControls("environment map", {
+      envMapIntensity: { value: 3.5, min: 0, max: 12 },
+      envMapHeight: { value: 7, min: 0, max: 100 },
+      envMapRadius: { value: 28, min: 10, max: 1000 },
+      envMapScale: { value: 100, min: 10, max: 1000 },
+    });
 
   return (
     <>
@@ -70,7 +80,7 @@ export default function Lesson45() {
       </AccumulativeShadows> */}
 
       <ContactShadows
-        position={[0, -0.999, 0]}
+        position={[0, 0, 0]}
         resolution={512}
         far={5}
         color={colour}
@@ -79,6 +89,8 @@ export default function Lesson45() {
         frames={1} // bakes the shadow
       />
 
+      {/*
+        // Removed to show Environment Map
       <directionalLight
         ref={directionalLightRef}
         // position={[1, 2, 3]}
@@ -96,27 +108,65 @@ export default function Lesson45() {
 
       <ambientLight intensity={0.5} />
 
-      <Sky sunPosition={sunPosition} />
+      <Sky sunPosition={sunPosition} /> */}
 
-      <mesh position-x={-2} castShadow>
+      <Environment
+        // background
+        ground={{
+          height: envMapHeight,
+          radius: envMapRadius,
+          scale: envMapScale,
+        }}
+        preset="sunset"
+        // resolution={32} // only used if env map needs rerendering
+        // files={[
+        //   `./environmentMaps/2/px.jpg`,
+        //   `./environmentMaps/2/nx.jpg`,
+        //   `./environmentMaps/2/py.jpg`,
+        //   `./environmentMaps/2/ny.jpg`,
+        //   `./environmentMaps/2/pz.jpg`,
+        //   `./environmentMaps/2/nz.jpg`,
+        // ]}
+        // files={"./environmentMaps/the_sky_is_on_fire_2k.hdr"}
+      >
+        {/* <color args={["#000000"]} attach="background" />
+
+        <Lightformer
+          position-z={-5}
+          scale={10}
+          color="red"
+          intensity={10}
+          form="ring"
+        /> */}
+
+        {/* <mesh position-z={-5} scale={10}>
+          <planeGeometry />
+          <meshBasicMaterial
+            color={[30, 0, 0]}
+            // color="red"
+          />
+        </mesh> */}
+      </Environment>
+
+      <mesh position-x={-2} position-y={1} castShadow>
         <sphereGeometry />
         <meshStandardMaterial color="yellow" />
       </mesh>
 
-      <mesh ref={cubeRef} position-x={2} scale={1.5} castShadow>
+      <mesh ref={cubeRef} position-x={2} position-y={1} scale={1.5} castShadow>
         <boxGeometry />
         <meshStandardMaterial color="mediumpurple" />
       </mesh>
 
-      <mesh
+      {/* <mesh
         scale={10}
         rotation-x={Math.PI * -0.5}
-        position-y={-1}
+        position-y={0}
         // receiveShadow // remove to use AccumulativeShadows
       >
         <planeGeometry />
         <meshStandardMaterial color="greenyellow" />
-      </mesh>
+      </mesh> */}
     </>
   );
 }
