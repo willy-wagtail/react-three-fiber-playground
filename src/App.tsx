@@ -23,7 +23,7 @@ function App() {
       <Leva collapsed />
 
       <Canvas
-        shadows
+        // shadows // remove shadows here if using ContactShadows
         camera={{
           fov: 45,
           near: 0.1,

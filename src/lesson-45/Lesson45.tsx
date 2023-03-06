@@ -3,21 +3,35 @@ import {
   useHelper,
   BakeShadows,
   SoftShadows,
+  AccumulativeShadows,
+  RandomizedLight,
+  ContactShadows,
 } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import { useControls } from "leva";
 import { useRef } from "react";
 import * as THREE from "three";
 
 export default function Lesson45() {
   const cubeRef = useRef<THREE.Mesh>(null!);
 
-  useFrame((state, delta) => {
-    cubeRef.current.rotation.y += delta * 0.2;
-  });
-
-  // Add light helpers
+  // Add light helpers - note it impacts AccumulatedShadows
   const directionalLightRef = useRef<THREE.DirectionalLight>(null!);
   useHelper(directionalLightRef, THREE.DirectionalLightHelper, 1);
+
+  useFrame((state, delta) => {
+    cubeRef.current.rotation.y += delta * 0.2;
+
+    // Move cube side to side to see AccumulatedShadows delay
+    // const elapsedTime = state.clock.elapsedTime;
+    // cubeRef.current.position.x = 2 + Math.sin(elapsedTime);
+  });
+
+  const { colour, opacity, blur } = useControls("contact shadows", {
+    colour: "#1d8f75",
+    opacity: { value: 0.4, min: 0, max: 1 },
+    blur: { value: 2.8, min: 0, max: 10 },
+  });
 
   return (
     <>
@@ -28,6 +42,35 @@ export default function Lesson45() {
       <color args={["ivory"]} attach="background" />
 
       <OrbitControls makeDefault />
+
+      {/* <AccumulativeShadows
+        color="#316d39"
+        opacity={0.8}
+        position={[0, -0.999, 0]}
+        frames={Infinity}
+        temporal
+        scale={10}
+        blend={100}
+      >
+        <RandomizedLight
+          amount={8}
+          radius={1}
+          ambient={0.5}
+          intensity={1}
+          position={[1, 2, 3]}
+          bias={0.001}
+        />
+      </AccumulativeShadows> */}
+
+      <ContactShadows
+        position={[0, -0.999, 0]}
+        resolution={512}
+        far={5}
+        color={colour}
+        opacity={opacity}
+        blur={blur}
+        frames={1} // bakes the shadow
+      />
 
       <directionalLight
         ref={directionalLightRef}
@@ -59,7 +102,7 @@ export default function Lesson45() {
         scale={10}
         rotation-x={Math.PI * -0.5}
         position-y={-1}
-        receiveShadow
+        // receiveShadow // remove to use AccumulativeShadows
       >
         <planeGeometry />
         <meshStandardMaterial color="greenyellow" />
