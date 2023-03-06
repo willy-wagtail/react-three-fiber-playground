@@ -6,6 +6,7 @@ import {
   AccumulativeShadows,
   RandomizedLight,
   ContactShadows,
+  Sky,
 } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
@@ -31,6 +32,12 @@ export default function Lesson45() {
     colour: "#1d8f75",
     opacity: { value: 0.4, min: 0, max: 1 },
     blur: { value: 2.8, min: 0, max: 10 },
+  });
+
+  // when setting sun position, instead of this, use spherical coordinates using Vector3.setFromSpherical
+  // by setting radius, phi, theta.
+  const { sunPosition } = useControls("sky", {
+    sunPosition: { value: [1, 2, 3] },
   });
 
   return (
@@ -74,7 +81,8 @@ export default function Lesson45() {
 
       <directionalLight
         ref={directionalLightRef}
-        position={[1, 2, 3]}
+        // position={[1, 2, 3]}
+        position={sunPosition}
         intensity={1}
         castShadow
         shadow-mapSize={[1024, 1024]}
@@ -87,6 +95,8 @@ export default function Lesson45() {
       />
 
       <ambientLight intensity={0.5} />
+
+      <Sky sunPosition={sunPosition} />
 
       <mesh position-x={-2} castShadow>
         <sphereGeometry />
