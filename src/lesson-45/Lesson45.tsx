@@ -9,6 +9,7 @@ import {
   Sky,
   Environment,
   Lightformer,
+  Stage,
 } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
@@ -38,21 +39,21 @@ export default function Lesson45() {
 
   // when setting sun position, instead of this, use spherical coordinates using Vector3.setFromSpherical
   // by setting radius, phi, theta.
-  const { sunPosition } = useControls("sky", {
-    sunPosition: { value: [1, 2, 3] },
-  });
+  // const { sunPosition } = useControls("sky", {
+  //   sunPosition: { value: [1, 2, 3] },
+  // });
 
-  const { envMapIntensity, envMapHeight, envMapRadius, envMapScale } =
-    useControls("environment map", {
-      envMapIntensity: { value: 3.5, min: 0, max: 12 },
-      envMapHeight: { value: 7, min: 0, max: 100 },
-      envMapRadius: { value: 28, min: 10, max: 1000 },
-      envMapScale: { value: 100, min: 10, max: 1000 },
-    });
+  // const { envMapIntensity, envMapHeight, envMapRadius, envMapScale } =
+  //   useControls("environment map", {
+  //     envMapIntensity: { value: 3.5, min: 0, max: 12 },
+  //     envMapHeight: { value: 7, min: 0, max: 100 },
+  //     envMapRadius: { value: 28, min: 10, max: 1000 },
+  //     envMapScale: { value: 100, min: 10, max: 1000 },
+  //   });
 
   return (
     <>
-      <SoftShadows />
+      {/* <SoftShadows /> */}
       {/* <BakeShadows /> */}
 
       {/* Another way to set background colour of parent (scene is implicit as no other parent) */}
@@ -79,7 +80,7 @@ export default function Lesson45() {
         />
       </AccumulativeShadows> */}
 
-      <ContactShadows
+      {/* <ContactShadows
         position={[0, 0, 0]}
         resolution={512}
         far={5}
@@ -87,7 +88,7 @@ export default function Lesson45() {
         opacity={opacity}
         blur={blur}
         frames={1} // bakes the shadow
-      />
+      /> */}
 
       {/*
         // Removed to show Environment Map
@@ -110,7 +111,7 @@ export default function Lesson45() {
 
       <Sky sunPosition={sunPosition} /> */}
 
-      <Environment
+      {/* <Environment
         // background
         ground={{
           height: envMapHeight,
@@ -128,8 +129,8 @@ export default function Lesson45() {
         //   `./environmentMaps/2/nz.jpg`,
         // ]}
         // files={"./environmentMaps/the_sky_is_on_fire_2k.hdr"}
-      >
-        {/* <color args={["#000000"]} attach="background" />
+      > */}
+      {/* <color args={["#000000"]} attach="background" />
 
         <Lightformer
           position-z={-5}
@@ -139,24 +140,37 @@ export default function Lesson45() {
           form="ring"
         /> */}
 
-        {/* <mesh position-z={-5} scale={10}>
+      {/* <mesh position-z={-5} scale={10}>
           <planeGeometry />
           <meshBasicMaterial
             color={[30, 0, 0]}
             // color="red"
           />
         </mesh> */}
-      </Environment>
+      {/* </Environment> */}
 
-      <mesh position-x={-2} position-y={1} castShadow>
-        <sphereGeometry />
-        <meshStandardMaterial color="yellow" />
-      </mesh>
+      <Stage
+        environment="sunset"
+        preset="portrait"
+        shadows={{ type: "contact", opacity: 0.5, blur: 3 }}
+        intensity={1.5}
+      >
+        <mesh position-x={-2} position-y={1} castShadow>
+          <sphereGeometry />
+          <meshStandardMaterial color="yellow" />
+        </mesh>
 
-      <mesh ref={cubeRef} position-x={2} position-y={1} scale={1.5} castShadow>
-        <boxGeometry />
-        <meshStandardMaterial color="mediumpurple" />
-      </mesh>
+        <mesh
+          ref={cubeRef}
+          position-x={2}
+          position-y={1}
+          scale={1.5}
+          castShadow
+        >
+          <boxGeometry />
+          <meshStandardMaterial color="mediumpurple" />
+        </mesh>
+      </Stage>
 
       {/* <mesh
         scale={10}
