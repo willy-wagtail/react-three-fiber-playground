@@ -6,9 +6,11 @@ body,
   width: 100%;
   top: 0;
   left: 0;
-  background: ivory;
+  /* background: ivory; */
 }
 
+
+/* Lesson 43 */
 .label > div {
   font-family: Helvetica, Arial;
   position: absolute;
