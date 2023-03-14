@@ -6,6 +6,7 @@ import * as THREE from "three";
 import "./App.css";
 import Lesson43 from "./lesson-43/Lesson43";
 import Lesson45 from "./lesson-45/Lesson45";
+import Lesson46 from "./lesson-46/Lesson46";
 
 /** One way of setting background colour of the scene */
 // const created = (state: RootState): void => {
@@ -15,7 +16,7 @@ import Lesson45 from "./lesson-45/Lesson45";
 function App() {
   const { perfVisible, lesson } = useControls({
     perfVisible: true,
-    lesson: { value: 45, options: [43, 45] },
+    lesson: { value: 46, options: [43, 45, 46] },
   });
 
   return (
@@ -40,6 +41,8 @@ function App() {
               return <Lesson43 />;
             case 45:
               return <Lesson45 />;
+            case 46:
+              return <Lesson46 />;
             default:
               return null;
           }

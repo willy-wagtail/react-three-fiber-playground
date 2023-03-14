@@ -121,14 +121,14 @@ export default function Lesson45() {
         preset="sunset"
         // resolution={32} // only used if env map needs rerendering
         // files={[
-        //   `./environmentMaps/2/px.jpg`,
-        //   `./environmentMaps/2/nx.jpg`,
-        //   `./environmentMaps/2/py.jpg`,
-        //   `./environmentMaps/2/ny.jpg`,
-        //   `./environmentMaps/2/pz.jpg`,
-        //   `./environmentMaps/2/nz.jpg`,
+        //   `./45/environmentMaps/2/px.jpg`,
+        //   `./45/environmentMaps/2/nx.jpg`,
+        //   `./45/environmentMaps/2/py.jpg`,
+        //   `./45/environmentMaps/2/ny.jpg`,
+        //   `./45/environmentMaps/2/pz.jpg`,
+        //   `./45/environmentMaps/2/nz.jpg`,
         // ]}
-        // files={"./environmentMaps/the_sky_is_on_fire_2k.hdr"}
+        // files={"./45/environmentMaps/the_sky_is_on_fire_2k.hdr"}
       > */}
       {/* <color args={["#000000"]} attach="background" />
 

@@ -98,7 +98,7 @@ export default function Lesson43() {
       <Float speed={2} floatIntensity={3}>
         {/* See Troika three text docs: https://www.npmjs.com/package/troika-three-text */}
         <Text
-          font="./bangers-v20-latin-regular.woff"
+          font="./43/bangers-v20-latin-regular.woff"
           color="salmon"
           position-y={2}
           fontSize={1}
