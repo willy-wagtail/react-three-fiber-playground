@@ -3,12 +3,20 @@ import { OrbitControls } from "@react-three/drei";
 import Model from "./Model";
 import Placeholder from "./Placeholder";
 import Fox from "./Fox";
+import Hamburger from "./Hamburger";
 
 export default function Lesson46() {
   return (
     <>
       <OrbitControls makeDefault />
-      <directionalLight castShadow position={[1, 2, 3]} intensity={1.5} />
+
+      <directionalLight
+        castShadow
+        position={[1, 2, 3]}
+        intensity={1.5}
+        shadow-normalBias={0.04}
+      />
+
       <ambientLight intensity={0.5} />
 
       <mesh
@@ -22,7 +30,9 @@ export default function Lesson46() {
       </mesh>
 
       <Suspense fallback={<Placeholder position-y={0.5} scale={[2, 3, 2]} />}>
-        <Model />
+        {/* <Model /> */}
+
+        <Hamburger scale={0.35} />
       </Suspense>
 
       <Fox />
